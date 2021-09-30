@@ -36,6 +36,5 @@ sheet.enable_bindings(("single_select",
                        "undo",
                        "edit_cell"))
 
-
 sheet.height_and_width(height = 500, width = 1000)
 app.mainloop()
