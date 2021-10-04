@@ -1,14 +1,29 @@
+# Imports
 import tkinter as tk
-
 import tksheet
+import pandas as pd
+from tkinter import filedialog
 
+# Input a csv
+root = tk.Tk()
+root.title('Insert a csv file')
+root.filename = filedialog.askopenfile(title="Select A File", filetypes = (("csv files","*.csv"),("all files","*.*")))
+root.destroy()
+
+# Read data from csv
+df = pd.read_csv(root.filename.name, nrows= 10)
+cols = list(df.columns)
+vals = df.values.tolist()
+
+# Visualization step
 app = tk.Tk()
-
-sheet = tksheet.Sheet(app)
+app.title("Table Visualizer")
+app.resizable(height = None, width = None)
+sheet = tksheet.Sheet(app,headers = cols)
 
 sheet.grid()
 
-sheet.set_sheet_data(data = [[]],
+sheet.set_sheet_data(data = vals,
                reset_col_positions = True,
                reset_row_positions = True,
                redraw = True,
@@ -16,7 +31,6 @@ sheet.set_sheet_data(data = [[]],
                reset_highlights = False
                )
 
-# table enable choices listed below:
 sheet.enable_bindings(("single_select",
                        "drag_select",
                        "row_select",
